@@ -1,9 +1,3 @@
-#nullable disable
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TodoApi.Models;
@@ -25,7 +19,7 @@ namespace TodoApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<TodoItemDTO>>> GetTodoItems()
         {
-            return await _context.TodoItems.Select(x => ItemToDTO(x)).ToListAsync();
+            return await _context.TodoItems.Select(x => ItemToDto(x)).ToListAsync();
         }
 
         // GET: api/TodoItems/5
@@ -39,7 +33,7 @@ namespace TodoApi.Controllers
                 return NotFound();
             }
 
-            return ItemToDTO(todoItem);
+            return ItemToDto(todoItem);
         }
 
         // PUT: api/TodoItems/5
@@ -85,7 +79,7 @@ namespace TodoApi.Controllers
             _context.TodoItems.Add(todoItem);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetTodoItem), new {id = todoItem.Id}, ItemToDTO(todoItem));
+            return CreatedAtAction(nameof(GetTodoItem), new {id = todoItem.Id}, ItemToDto(todoItem));
         }
 
         // DELETE: api/TodoItems/5
@@ -109,7 +103,7 @@ namespace TodoApi.Controllers
             return _context.TodoItems.Any(e => e.Id == id);
         }
 
-        private static TodoItemDTO ItemToDTO(TodoItem todoItem)
+        private static TodoItemDTO ItemToDto(TodoItem todoItem)
         {
             return new TodoItemDTO()
             {
